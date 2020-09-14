@@ -25,6 +25,6 @@ do
     if [ ${line} !=  . ]; then
         search=$line
         replacement=$contents
-        sed -i "" "s/{SECRET_${search}}/${replacement}/g" $2
+        sed -i "s/{SECRET_${search}}/${replacement}/g" $2
     fi
 done < <(find secrets -type f -printf "%f\n")
