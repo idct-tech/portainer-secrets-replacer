@@ -27,4 +27,10 @@ installation
 
 in your docker file be sure to download the replacer into your image:
 ```
-curl
+RUN curl https://raw.githubusercontent.com/ideaconnect/portainer-secrets-replacer/master/psr-replace -O psr-replace && chmod +x psr-replace
+```
+
+execute with parameters of your need/choice:
+```
+RUN ./psr-replace /app/my_config.json /run/secrets
+```
