@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+if [[ $# < 2 ]]; then
+    echo "Error. Not enough arguments." >&2
+    echo "usage: psr-replace secrets_folder config_file" >&2
+    echo "example: psr-replace /run/secrets /app/my_config.json" >&2
+    echo ""
+    echo "Need help? info@idct.pl"
+    exit 1;
+fi
+
+if [ ! -d "$1" ]; then
+    echo "Directory $1 does not exist."
+    exit 2;
+fi
+
+if [ ! -f "$2" ]; then
+    echo "File $2 does not exist."
+    exit 3;
+fi
+
+while read line
+do
+    contents=`cat $1/$line`
+    if [ ${line} !=  . ]; then
+        search=$line
+        replacement=$contents
+        sed -i "" "s/{SECRET_${search}}/${replacement}/g" $2
+    fi
+done < <(find secrets -type f -printf "%f\n")
